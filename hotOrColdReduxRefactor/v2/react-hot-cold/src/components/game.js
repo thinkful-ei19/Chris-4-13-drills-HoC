@@ -7,28 +7,20 @@ import GuessSection from './guess-section';
 import StatusSection from './status-section';
 import InfoSection from './info-section';
 
-import {inputNumber, updateDom} from '../actions/actions'
-
 import store from '../store'
 
-export default class Game extends React.Component {
+import {inputNumber, updateDom, restartGame} from '../actions/actions'
+
+class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      guesses: [],
-      feedback: 'Make your guess!',
-      auralStatus: '',
-      correctAnswer: Math.round(Math.random() * 100) + 1
-    };
+
+    this.state = store.getState()
+    console.log(this.state);
   }
 
   restartGame() {
-    this.setState({
-      guesses: [],
-      feedback: 'Make your guess!',
-      auralStatus: '',
-      correctAnswer: Math.floor(Math.random() * 100) + 1
-    });
+    store.dispatch(restartGame())
   }
 
   makeGuess(guess) {
@@ -64,3 +56,13 @@ export default class Game extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+    numbers: state.numbers
+})
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ inputNumber, updateDom, restartGame }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

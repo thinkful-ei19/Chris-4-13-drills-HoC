@@ -1,3 +1,5 @@
+import { combineReducers } from 'redux';
+
 import { INPUT_NUMBER, RESTART_GAME, UPDATE_DOM } from '../actions/actions'
 
 const initialState = {
@@ -8,7 +10,6 @@ const initialState = {
 }
 
 export const mainReducer = (state = initialState, action) => {
-    console.log(state);
     switch (action.type) {
         case INPUT_NUMBER:
             const guess = parseInt(action.payload.number, 10);
@@ -63,4 +64,5 @@ export const mainReducer = (state = initialState, action) => {
 
             return Object.assign({}, state, {auralStatus});
     }
+    return state;
 }
